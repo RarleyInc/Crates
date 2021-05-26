@@ -17,13 +17,13 @@ Get to know the tools and API used in the project
 
 # Wiki
 
-Access the *wiki* by clicking [here](https://github.com/RarleyInc/Crates/wiki/General).
+Access the *wiki* by clicking [here](https://github.com/RarleyInc/Crates/wiki/).
 
 # GIF
 Watch the crate opening animation below:
 
 <p align="left">
-  <img src=https://i.gyazo.com/dab0308afcccc11eecc2931556b0cea6.gif></>
+    <img src=https://i.gyazo.com/dab0308afcccc11eecc2931556b0cea6.gif alt="gif"/>
 </p>
 
 
