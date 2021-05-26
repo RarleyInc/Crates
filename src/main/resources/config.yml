@@ -1,0 +1,13 @@
+database:
+  table: 'crates_users'
+  user: 'root'
+  password: 'pass'
+  port: '3306'
+  host: 'localhost'
+  database: 'default'
+
+max-items-per-crate: 30 # max anyway = 54
+
+player:
+  crates-per-day: 3
+  delay-to-open-other-crate: 10 # seconds

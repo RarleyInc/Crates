@@ -1,0 +1,27 @@
+messages:
+  inventory-full: '&c&lError: &cNo free slots in inventory. (Player)'
+  invalid-amount: '&c&lError: &cInvalid amount.'
+  offline-player: '&c&lError: &cPlayer offline.'
+  no-permission: '&cNo permission.'
+  max-items-per-crate: '&c&lError: &cMaximum items per crate exceeded.'
+  max-crates-per-day: '&c&lError: &cMaximum crates available in 24 hours exceeded.'
+  crate-already-exists: '&c&lError: &cCrate already exists'
+  crate-not-exists: '&c&lError: &cThis crate does not exists.'
+  crate-no-items: '&c&lError: &cCrate does not have items.'
+  crate-gave: '&aYou gave &f%amount%x %crate% &ato &f%player%&a.'
+  wait-open-crate: '&c&lError: &cWait &f%seconds%&c seconds to open another crate.'
+  write-item-chance: '&aWrite the chance you want for &fItem #%id%&a:'
+  updated-item-chance: '&fItem #%id%&a chance set to &f%chance%%&a.'
+  chance-is-greater: '&c&lError: &cTotal chance is greater than &f100%&c.'
+  #
+  create:
+    success: '&aCrate created has been successfully.'
+    cancelled: '&aCrate creation process has been cancelled.'
+    without-item: '&c&lError: &cCant create crate without item in hand.'
+  delete:
+    success: '&aCrate deleted has been successfully.'
+    cancelled: '&aCrate delete process has been cancelled.'
+  open:
+    success: '&aCrate successfully opened. You got: &f"%item_name%" &a| Chance: &f%item_chance%%&a.'
+  edit:
+    success: '&aCrate edited has been successfully.'

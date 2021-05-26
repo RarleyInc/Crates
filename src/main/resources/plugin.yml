@@ -1,0 +1,11 @@
+name: RarleyCrates
+version: ${project.version}
+main: com.rarley.crates.CratesPlugin
+authors: [iHuck]
+description: A simple plugin of crates
+website: rarley.com
+commands:
+  crates:
+    description: Command for admins
+    aliases:
+      - crate
