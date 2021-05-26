@@ -29,6 +29,7 @@ import lombok.Getter;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.Objects;
+
 @PluginInfo(
         name = "Crates",
         description = "A simple plugin of crates",
