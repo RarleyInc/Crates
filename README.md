@@ -23,7 +23,7 @@ Access the *wiki* by clicking [here](https://github.com/RarleyInc/Crates/wiki/).
 Watch the crate opening animation below:
 
 <p align="left">
-    <img src=https://i.gyazo.com/dab0308afcccc11eecc2931556b0cea6.gif alt="gif"/>
+    <img src=https://i.gyazo.com/fcb4061fcb1d7c178efd55f48a0c6ac6.gif alt="gif"/>
 </p>
 
 
