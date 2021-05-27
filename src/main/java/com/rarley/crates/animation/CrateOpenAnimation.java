@@ -96,10 +96,7 @@ public class CrateOpenAnimation extends BukkitRunnable {
                 (short) ((data + 1) == 8 ? data + 2 : data + 1));
 
         final ItemMeta itemMeta = startItem.getItemMeta();
-        itemMeta.setDisplayName(String.format("§%s.§%s.§%s.",
-                Math.min(data, 9),
-                Math.min(data + 1, 7),
-                Math.min(data + 2, 6)));
+        itemMeta.setDisplayName(String.format("§%s...", Math.min(data + 1, 9)));
 
         startItem.setItemMeta(itemMeta);
         endItem.setItemMeta(itemMeta);
