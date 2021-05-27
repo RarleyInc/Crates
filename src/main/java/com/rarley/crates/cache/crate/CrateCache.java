@@ -86,7 +86,8 @@ public class CrateCache {
     public void loadCrate(@NonNull File file) {
         final FileConfiguration configuration = instance.getFlatFile().getConfiguration(file);
 
-        if(!configuration.contains("name") || !configuration.contains("icon") || !configuration.contains("items")) return;
+        if (!configuration.contains("name") || !configuration.contains("icon") || !configuration.contains("items"))
+            return;
 
         final String name = configuration.getString("name");
         final ItemStack icon = ItemSerializer.read(configuration.getString("icon"))[0];

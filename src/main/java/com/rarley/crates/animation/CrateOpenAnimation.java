@@ -31,53 +31,57 @@ public class CrateOpenAnimation extends BukkitRunnable {
 
     private int finishedCount, startCount, endCount = 44;
 
-    public CrateOpenAnimation(CratesPlugin instance, Crate crate, Inventory inventory, Player player) {
+    private CrateOpenAnimation(CratesPlugin instance, Crate crate, Inventory inventory, Player player) {
         this.inventory = inventory;
         this.player = player;
         this.item = randomItem(crate);
         this.instance = instance;
 
+        if (player == null) return; // force stop animation.
+
+        removeCrate();
+
+        player.openInventory(inventory);
+
         runTaskTimer(instance, 5L, 5L);
+    }
+
+    public static void of(CratesPlugin instance, String crate, Inventory inventory, Player player) {
+        new CrateOpenAnimation(instance, instance.getCrateCache().getCrate(crate), inventory, player);
     }
 
     @Override
     public void run() {
-        if (player == null || finishedCount >= 4) {
+        if (player == null) {
+            cancel();
+            return;
+        }
 
-            if (player != null) {
+        if (!hasCrateInventoryOpen() || finishedCount >= 4) {
 
-                if(item != null) {
-                    final String itemName = (item.getItem().hasItemMeta() && item.getItem().getItemMeta().hasDisplayName())
-                            ? item.getItem().getItemMeta().getDisplayName()
-                            : "Nameless";
+            if (item != null) {
+                player.getInventory().addItem(item.getItem());
 
-                    player.sendMessage(instance.getMessages().get("success", "open")
-                            .replace("%item_name%", itemName)
-                            .replace("%item_chance%", String.valueOf(item.getChance())));
-                }
+                final String itemName = (item.getItem().hasItemMeta() && item.getItem().getItemMeta().hasDisplayName())
+                        ? item.getItem().getItemMeta().getDisplayName()
+                        : "Nameless";
 
-                player.closeInventory();
-            }
+                player.sendMessage(instance.getMessages().get("success", "open")
+                        .replace("%item_name%", itemName)
+                        .replace("%item_chance%", String.valueOf(item.getChance())));
+
+            } else player.sendMessage("§cYou didn't get anything from the crate.");
+
+            player.closeInventory();
 
             cancel();
             return;
         }
 
-        player.openInventory(inventory);
-
         if (startCount == endCount) {
-            if (finishedCount == 0) {
 
-                if (item == null) {
-                    inventory.setItem(22, new ItemStack(Material.BARRIER));
-
-                    player.sendMessage("§cYou didn't get anything from the crate.");
-                } else {
-                    inventory.setItem(22, item.getItem());
-
-                    player.getInventory().addItem(item.getItem());
-                }
-            }
+            if (finishedCount == 0)
+                inventory.setItem(22, (item == null ? new ItemStack(Material.BARRIER) : item.getItem()));
 
             finishedCount++;
             return;
@@ -95,6 +99,24 @@ public class CrateOpenAnimation extends BukkitRunnable {
         endCount--;
     }
 
+    @SuppressWarnings("deprecation")
+    private void removeCrate() {
+        final ItemStack itemInHand = player.getItemInHand();
+
+        if (itemInHand != null) {
+            if (itemInHand.getAmount() > 1)
+                itemInHand.setAmount(itemInHand.getAmount() - 1);
+            else
+                player.setItemInHand(null);
+        }
+    }
+
+    private boolean hasCrateInventoryOpen() {
+        return player != null
+                && player.getOpenInventory() != null
+                && player.getOpenInventory().getTitle().equals("§8Drawing an item...");
+    }
+
     private ItemCrate randomItem(@NonNull Crate crate) {
         AtomicReference<ItemCrate> found = new AtomicReference<>();
 
@@ -106,11 +128,11 @@ public class CrateOpenAnimation extends BukkitRunnable {
                 .sorted(Comparator.comparing(ItemCrate::getChance))
                 .forEachOrdered(item -> {
 
-            if (found.get() != null) return;
+                    if (found.get() != null) return;
 
-            if (random <= (int) item.getChance())
-                found.set(item);
-        });
+                    if (random <= (int) item.getChance())
+                        found.set(item);
+                });
 
         if (found.get() == null && crate.getItemsTotalChances() >= 99)
             found.set(crate.getItems().stream().max(Comparator.comparing(ItemCrate::getChance)).orElse(null));

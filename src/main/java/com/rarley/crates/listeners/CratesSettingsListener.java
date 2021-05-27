@@ -32,6 +32,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Map;
@@ -107,40 +108,37 @@ public class CratesSettingsListener implements Listener {
 
     // actions
 
-    private void openCrate(Player player, String name) {
-        final CrateOpenValidate validate = new CrateOpenValidate(instance, name);
+    private void openCrate(Player player, String crateName) {
+        final CrateOpenValidate validate = new CrateOpenValidate(instance, crateName);
 
         validate.run(player, (consumer) -> {
-            if(!consumer.hasPermission("crates.bypass")) {
+            if (!consumer.hasPermission("crates.bypass")) {
                 final UserCrate user = instance.getUserCache().getAndPut(consumer.getName());
 
                 user.applyCooldown(instance.getSettings().getDelayToOpenOtherCrate());
             }
 
-            removeItem(consumer);
+            final Inventory animationInventory = new InventoryBuilder("§8Drawing an item...", 5).build();
 
-            new CrateOpenAnimation(instance,
-                    instance.getCrateCache().getCrate(name),
-                    new InventoryBuilder("§8Drawing an item...", 5).build(),
-                    consumer);
+            CrateOpenAnimation.of(instance, crateName, animationInventory, consumer);
         });
     }
 
-    private void deleteCrate(Player player, String name) {
-        final CrateDeleteValidate validate = new CrateDeleteValidate(instance, name);
+    private void deleteCrate(Player player, String crateName) {
+        final CrateDeleteValidate validate = new CrateDeleteValidate(instance, crateName);
 
         validate.run(player, consumer -> {
-            instance.getCrateCache().deleteCrate(name);
+            instance.getCrateCache().deleteCrate(crateName);
 
             consumer.sendMessage(instance.getMessages().get("success", "delete"));
         });
     }
 
-    private void editCrate(Player player, String name, ClickType clickType, ItemStack item, int itemId) {
-        final CrateEditValidate validate = new CrateEditValidate(instance, name);
+    private void editCrate(Player player, String crateName, ClickType clickType, ItemStack item, int itemId) {
+        final CrateEditValidate validate = new CrateEditValidate(instance, crateName);
 
         validate.run(player, consumer -> {
-            final Crate crate = instance.getCrateCache().getCrate(name);
+            final Crate crate = instance.getCrateCache().getCrate(crateName);
 
             switch (clickType) {
                 case LEFT:
@@ -180,20 +178,19 @@ public class CratesSettingsListener implements Listener {
     }
 
     @SuppressWarnings("deprecation")
-    private void createCrate(Player player, String name) {
-        final CrateCreateValidate validate = new CrateCreateValidate(instance, name);
+    private void createCrate(Player player, String crateName) {
+        final CrateCreateValidate validate = new CrateCreateValidate(instance, crateName);
 
         validate.run(player, consumer -> {
             final ItemStack icon = new ItemStack(consumer.getItemInHand());
 
             icon.setAmount(1);
 
-            instance.getCrateCache().createCrate(new Crate(name, icon));
+            instance.getCrateCache().createCrate(new Crate(crateName, icon));
 
             consumer.sendMessage(instance.getMessages().get("success", "create"));
         });
     }
-
 
 
     // set chance
@@ -254,19 +251,6 @@ public class CratesSettingsListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     private void onPlayerQuit(PlayerQuitEvent event) {
         chance.remove(event.getPlayer().getName());
-    }
-
-
-    @SuppressWarnings("deprecation")
-    private void removeItem(Player player) {
-        final ItemStack itemInHand = player.getItemInHand();
-
-        if (itemInHand != null) {
-            if (itemInHand.getAmount() > 1)
-                itemInHand.setAmount(itemInHand.getAmount() - 1);
-            else
-                player.setItemInHand(null);
-        }
     }
 
 

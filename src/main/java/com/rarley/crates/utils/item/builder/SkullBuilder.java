@@ -1,8 +1,8 @@
 /**************************************
  Copyright (c) 2021 | RarleyCrates.   *
-                                      *
+ *
  Author github.com/pedroagrs          *
-                                      *
+ *
  Rarley, Inc (github.com/RarleyInc)   *
  **************************************/
 
@@ -42,14 +42,14 @@ public class SkullBuilder extends ItemBuilder {
 
     @Override
     public ItemStack build() {
-        itemStack.setItemMeta((SkullMeta) itemMeta);
+        itemStack.setItemMeta(itemMeta);
 
         final ItemMeta itemMeta = itemStack.getItemMeta();
 
         if (url != null)
             mutateItemMeta((SkullMeta) itemMeta, url);
 
-        if(owner != null)
+        if (owner != null)
             ((SkullMeta) itemMeta).setOwner(owner);
 
         itemStack.setItemMeta(itemMeta);

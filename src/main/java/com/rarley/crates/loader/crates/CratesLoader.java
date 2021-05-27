@@ -22,7 +22,7 @@ public class CratesLoader {
 
         final ExecutorService cachedThread = Executors.newCachedThreadPool();
 
-        if(cachedThread.submit(() -> Stream.of(crates).forEach(cache::loadCrate)).isDone())
+        if (cachedThread.submit(() -> Stream.of(crates).forEach(cache::loadCrate)).isDone())
             cachedThread.shutdown();
     }
 

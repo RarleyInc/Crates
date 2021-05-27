@@ -27,7 +27,7 @@ public class InventoryBuilder implements InventoryHolder, Listener {
     }
 
     public InventoryBuilder addItem(ItemStack item, int... slots) {
-        for(int slot : slots)
+        for (int slot : slots)
             inventory.setItem(slot, item);
 
         return this;
@@ -51,7 +51,7 @@ public class InventoryBuilder implements InventoryHolder, Listener {
         if (event.getInventory().getHolder() != null
                 && event.getInventory().getHolder() == inventory.getHolder()) {
 
-           event.setCancelled(true);
+            event.setCancelled(true);
         }
     }
 

@@ -83,7 +83,7 @@ public class UniversalTagCompound {
 
         final ItemStack finalItem = NMSUtils.craftItemStack(nmsItemStack);
 
-        if(itemMeta != null) {
+        if (itemMeta != null) {
             final ItemMeta finalMeta = finalItem.getItemMeta();
 
             finalMeta.setDisplayName(itemMeta.getDisplayName());

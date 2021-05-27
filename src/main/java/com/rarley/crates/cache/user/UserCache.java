@@ -22,7 +22,6 @@ public class UserCache {
     private final UserCacheLoader userCacheLoader;
     private final LoadingCache<String, UserCrate> cache;
 
-
     public UserCache(CratesPlugin instance, UserCacheLoader cacheLoader) {
         this.userCacheLoader = cacheLoader;
 

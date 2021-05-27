@@ -1,8 +1,8 @@
 /**************************************
  Copyright (c) 2021 | RarleyCrates.   *
-                                      *
+ *
  Author github.com/pedroagrs          *
-                                      *
+ *
  Rarley, Inc (github.com/RarleyInc)   *
  **************************************/
 

@@ -1,8 +1,8 @@
 /**************************************
  Copyright (c) 2021 | RarleyCrates.   *
-                                      *
+ *
  Author github.com/pedroagrs          *
-                                      *
+ *
  Rarley, Inc (github.com/RarleyInc)   *
  **************************************/
 
@@ -13,7 +13,6 @@ import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
 
 import java.sql.SQLException;
-
 
 
 @RequiredArgsConstructor
