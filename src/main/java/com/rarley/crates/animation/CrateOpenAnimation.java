@@ -16,6 +16,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Comparator;
@@ -89,11 +90,22 @@ public class CrateOpenAnimation extends BukkitRunnable {
 
         final int data = ThreadLocalRandom.current().nextInt(14);
 
-        inventory.setItem(startCount,
-                new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) (data == 8 ? data + 1 : data)));
+        final ItemStack startItem = new ItemStack(Material.STAINED_GLASS_PANE, 1,
+                (short) (data == 8 ? data + 1 : data));
+        final ItemStack endItem = new ItemStack(Material.STAINED_GLASS_PANE, 1,
+                (short) ((data + 1) == 8 ? data + 2 : data + 1));
 
-        inventory.setItem(endCount,
-                new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) ((data + 1) == 8 ? data + 2 : data + 1)));
+        final ItemMeta itemMeta = startItem.getItemMeta();
+        itemMeta.setDisplayName(String.format("§%s.§%s.§%s.",
+                Math.min(data, 9),
+                Math.min(data + 1, 7),
+                Math.min(data + 2, 6)));
+
+        startItem.setItemMeta(itemMeta);
+        endItem.setItemMeta(itemMeta);
+
+        inventory.setItem(startCount, startItem);
+        inventory.setItem(endCount, endItem);
 
         startCount++;
         endCount--;
