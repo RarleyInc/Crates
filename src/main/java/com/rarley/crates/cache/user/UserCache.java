@@ -13,10 +13,8 @@ import com.google.common.cache.LoadingCache;
 import com.rarley.crates.CratesPlugin;
 import com.rarley.crates.model.UserCrate;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
-@RequiredArgsConstructor
 public class UserCache {
 
     private final UserCacheLoader userCacheLoader;
